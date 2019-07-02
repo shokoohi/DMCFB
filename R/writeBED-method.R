@@ -1,0 +1,60 @@
+.writeBED_BSDMC <- function(object, name, file) {
+
+    if (ncol(object) != length(name) | ncol(object) != length(file)) {
+        stop("Character vectors name and file must have the same length as the
+    object has samples.")
+    }
+
+    colFunc <- colorRamp(colors = c("green", "black", "red"))
+    strand(object) <- "*"
+    object = sort(object)
+
+    for (i in seq_len(ncol(object))) {
+        object.i <- object[, i]
+        ind.cov <- totalReads(object.i) != 0
+        if (sum(ind.cov) > 1) {
+            object.i <- object.i[ind.cov, ]
+            bed <- rowRanges(object.i)
+            mcols(bed)$score <- methReads(object.i)/totalReads(object.i)
+            mcols(bed)$name <- totalReads(object.i)
+            m <- colFunc(mcols(bed)$score)/255
+            mcols(bed)$itemRgb <- rgb(m[, 1], m[, 2], m[, 3])
+
+            bed <- as(bed, "UCSCData")
+            bed@trackLine@name <- paste("\"", name[i], "\"", sep = "")
+            export.ucsc(bed, con = file[i], subformat = "bed")
+
+        } else {
+            # no CpGs are covered
+            warning(paste(name[i], ": No CpG is covered - no bed file has
+    been written",
+                sep = ""))
+        }
+    }
+}
+
+#' @rdname writeBED-method
+#' @aliases writeBED-method writeBED
+setMethod("writeBED", signature = c(object = "BSDMC", name = "character",
+    file = "missing"), function(object, name) {
+    .writeBED_BSDMC(object, name = name, file = paste(colnames(object),
+        ".bed", sep = ""))
+})
+
+#' @rdname writeBED-method
+#' @aliases writeBED-method writeBED
+setMethod("writeBED", signature = c(object = "BSDMC", name = "missing",
+    file = "character"), function(object, file) {
+    .writeBED_BSDMC(object, name = colnames(object), file = file)
+})
+
+#' @rdname writeBED-method
+#' @aliases writeBED-method writeBED
+setMethod("writeBED", signature = c(object = "BSDMC", name = "missing",
+    file = "missing"), function(object) {
+    .writeBED_BSDMC(object, name = colnames(object),
+                    file = paste(colnames(object), ".bed", sep = ""))
+})
+
+
+

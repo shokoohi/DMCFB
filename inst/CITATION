@@ -1,0 +1,33 @@
+citHeader("To cite DMCFB in publications use:")
+
+citEntry(entry = "Manual",
+         title = paste('DMCFB: an R package to identify differentially
+         methylated cytosines using Bayesian functional regression models,
+         Version 0.99.0'),
+         author = c(person("Farhad", "Shokoohi")),
+         year = '2019',
+         url = 'http://bioconductor.org/packages/DMCFB/',
+         textVersion  =
+           paste0('Farhad Shokoohi (2019) DMCFB: an R package to identify
+           differentially methylated cytosines using Bayesian functional
+           regression models, Version 0.99.0, ',
+           'URL  http://bioconductor.org/packages/DMCFB/')
+)
+
+citEntry(entry = "Article",
+    title = "Identifying Differentially Methylated Cytosines in Bisulfite
+    Sequencing Data via a Bayesian Functional Regression Model",
+         author = c(person("Farhad", "Shokoohi"),
+                    person("David", "Stephens"),
+                    person("Celia", "Greenwood")),
+         year = '2019',
+         journal = "Biometrics",
+         journal = "DOI: 10.1111/biom.12965",
+         url = "https://doi.org/10.1111/biom.12965",
+         textVersion =
+           paste('Shokoohi F., Stephens D. and Greenwood C. (2019).',
+         'Identifying Differentially Methylated Cytosines in Bisulfite
+         Sequencing Data via a Bayesian Functional Regression Model.',
+                 'Biometrics.', 'DOI: 10.1111/biom.12965')
+)
+
