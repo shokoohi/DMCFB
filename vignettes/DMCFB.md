@@ -1,21 +1,16 @@
 ---
 title: "Identifying DMCs using Bayesian functional regressions in BS-Seq data"
 author: "Farhad Shokoohi"
-date: "`r Sys.Date()`"
+date: "2019-07-02"
 package: DMCFB
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteEngine{knitr::knitr}
+ %\VignetteEngine{knitr::knitr}
   %\VignetteIndexEntry{Sending Messages With Gmailr}
   %\usepackage[utf8]{inputenc}
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+
 
 The `DMCFB` package is a pipeline to identify differentially methyalted 
 cytosines (DMC) in bisulfite sequencing data using Bayesian functional
@@ -46,15 +41,28 @@ to the object using `DataFrame` function.
 As an example, we have provided three files in the package that can be read as 
 follows:
 
-```{r, eval=TRUE, message=FALSE}
+
+```r
 library(DMCFB)
 fn <- list.files(system.file("extdata",package = "DMCFB"))
 fn.f <- list.files(system.file("extdata",package="DMCFB"), full.names=TRUE)
 OBJ <- readBismark(fn.f, fn)
+#> Processing sample blk.BCU1568_BC_BS_1 ... 
+#> Processing sample blk.BCU173_TC_BS_1 ... 
+#> Processing sample blk.BCU551_Mono_BS_1 ... 
+#> Building BSDMC object.
 cdOBJ <- DataFrame(Cell = factor(c("BC", "TC","Mono"),
 levels = c("BC", "TC", "Mono")), row.names = c("BCU1568","BCU173","BCU551"))
 colData(OBJ) <- cdOBJ
 OBJ
+#> class: BSDMC 
+#> dim: 25668 3 
+#> metadata(0):
+#> assays(3): methReads totalReads methLevels
+#> rownames(25668): 1 2 ... 25667 25668
+#> rowData names(0):
+#> colnames(3): BCU1568 BCU173 BCU551
+#> colData names(1): Cell
 ```
 
 
@@ -69,7 +77,8 @@ in a `DataFrame` and then assign to the object.
 
 The following exampel shows the details. 
 
-```{r, eval=TRUE, message=FALSE}
+
+```r
 library(DMCFB)
 set.seed(1980)
 nr <- 1000; nc <- 8
@@ -82,13 +91,22 @@ cd1 <- DataFrame(Group=rep(c('G1','G2'),each=nc/2),row.names=LETTERS[1:nc])
 OBJ2 <- cBSDMC(rowRanges=r1,methReads=methc,totalReads=metht,
 methLevels=methl,colData=cd1)
 OBJ2
+#> class: BSDMC 
+#> dim: 1000 8 
+#> metadata(0):
+#> assays(3): methReads totalReads methLevels
+#> rownames(1000): 1 2 ... 999 1000
+#> rowData names(0):
+#> colnames(8): A B ... G H
+#> colData names(1): Group
 ```
 
 ## Identifying DMCs
 To identify DMCs, one need to use the function `findDMCFB()` function. 
 The function
 
-```{r, eval=FALSE}
+
+```r
 library(DMCFB)
 start.time <- Sys.time()
 path0 <- "..//BCData/" # provide the path to the files
@@ -123,7 +141,8 @@ that resulted from running `findDMCFB()` function.
 To illustrate use the following example:
 
 
-```{r, fig.width=7}
+
+```r
 library(DMCFB)
 set.seed(1980)
 nr <- 1000; nc <- 8
@@ -137,6 +156,32 @@ OBJ1 <- cBSDMC(rowRanges=r1,methReads=methc,totalReads=metht,
 methLevels=methl,colData=cd1)
 OBJ2 = findDMCFB(object = OBJ1, bwa = 30, bwb = 30, nBurn = 10, nMC = 10,
                     nThin = 1, alpha = 0.05, pSize = 500, sfiles = FALSE)
+#> ------------------------------------------------------------
+#> Running Bayesian functional regression model ...
+#> The priors's SD = 0.3027, estimated from data ... 
+#> Number of assigned cores: 6 ... 
+#> ------------------------------------------------------------
+#> Fitted model: logit(MethRead/ReadDepth) ~ F(Group) 
+#> ------------------------------------------------------------
+#> Creating 1 batches of genomic positions ... 
+#> Running batch 1/1; chr1; 1000 positions; Region [   1, 1000]; Date 2019-07-02 16:43:03
+#> ------------------------------------------------------------
+#> Combining 1 objects ... 
+#> Objects are combined.
+#> ------------------------------------------------------------
+#> Identifying DMCs ...
+#> DMCs are identified.
+#> ------------------------------------------------------------
+#> Percentage of non-DMCs and DMCs:
+#> Equal(%)   DMC(%) 
+#>     36.6     63.4 
+#> ------------------------------------------------------------
+#> Percentage of hyper-, hypo-, and equal-methylated positions:
+#>        Equal(%) Hyper(%) Hypo(%)
+#> G2vsG1     36.6     28.5    34.9
+#> ------------------------------------------------------------
 plotDMCFB(OBJ2, region = c(1,400), nSplit = 2)
 ```
+
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-2.png)
 
