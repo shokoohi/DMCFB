@@ -25,18 +25,29 @@ two \code{\link{BSDMC-class}}
 }
 \examples{
 set.seed(1980)
-nr <- 150; nc <- 8
-metht <- matrix(as.integer(runif(nr * nc*2, 0, nr)), nr)
-methc <- matrix(rbinom(n=nr*nc,c(metht),prob = runif(nr*nc*2)),nr,nc*2)
-methl <- methc/metht
-r1 <- GRanges(rep('chr1', nr), IRanges(1:nr, width=1), strand='*')
+nr <- 150
+nc <- 8
+metht <- matrix(as.integer(runif(nr * nc * 2, 0, nr)), nr)
+methc <- matrix(
+  rbinom(n = nr * nc, c(metht), prob = runif(nr * nc * 2)),
+  nr, nc * 2
+)
+methl <- methc / metht
+r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
 names(r1) <- 1:nr
-cd1 <- DataFrame(Group=rep('G1',each=nc),row.names=LETTERS[1:nc])
-OBJ1 <- cBSDMC(rowRanges=r1,methReads=methc[,1:nc],totalReads=metht[,1:nc],
-methLevels=methl[,1:nc],colData=cd1)
-cd2 <- DataFrame(Group=rep('G2',each=nc),row.names=LETTERS[nc+1:nc])
-OBJ2 <- cBSDMC(rowRanges=r1,methReads=methc[,nc+1:nc],totalReads=
-metht[,nc+1:nc],methLevels=methl[,nc+1:nc],colData=cd2)
+cd1 <- DataFrame(Group = rep("G1", each = nc), row.names = LETTERS[1:nc])
+OBJ1 <- cBSDMC(
+  rowRanges = r1, methReads = methc[, 1:nc], totalReads = metht[, 1:nc],
+  methLevels = methl[, 1:nc], colData = cd1
+)
+cd2 <- DataFrame(
+  Group = rep("G2", each = nc),
+  row.names = LETTERS[nc + 1:nc]
+)
+OBJ2 <- cBSDMC(
+  rowRanges = r1, methReads = methc[, nc + 1:nc], totalReads =
+    metht[, nc + 1:nc], methLevels = methl[, nc + 1:nc], colData = cd2
+)
 OBJ3 <- combine(OBJ1, OBJ2)
 OBJ3
 }

@@ -13,6 +13,7 @@ setMethod("methReads", signature(object = "BSDMC"), .methReads)
 
 #' @rdname methReads-method
 #' @aliases methReads-method methReads<-
-setReplaceMethod("methReads", signature(object = "BSDMC", value = "matrix"),
-    .replace.methReads)
-
+setReplaceMethod(
+    "methReads", signature(object = "BSDMC", value = "matrix"),
+    .replace.methReads
+)

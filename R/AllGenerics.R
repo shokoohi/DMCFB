@@ -18,24 +18,30 @@
 #' @return A \code{\link{BSDMC-class}}
 #' @examples
 #' set.seed(1980)
-#' nr <- 150; nc <- 8
+#' nr <- 150
+#' nc <- 8
 #' metht <- matrix(as.integer(runif(nr * nc, 0, 100)), nr)
-#' methc <- matrix(rbinom(n=nr*nc,c(metht),prob = runif(nr*nc)),nr,nc)
+#' methc <- matrix(rbinom(n = nr * nc, c(metht), prob = runif(nr * nc)), nr, nc)
 #' meths <- matrix(as.integer(runif(nr * nc, 0, 10)), nr)
-#' methl <- methc/metht
+#' methl <- methc / metht
 #' methv <- matrix((runif(nr * nc, 0.1, 0.5)), nr)
-#' r1 <- GRanges(rep('chr1', nr), IRanges(1:nr, width=1), strand='*')
+#' r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
 #' names(r1) <- 1:nr
-#' cd1 <- DataFrame(Group=rep(c('G1','G2'),each=nc/2),row.names=LETTERS[1:nc])
-#' OBJ2 <- cBSDMC(rowRanges=r1,methReads=methc,totalReads=metht,
-#' methLevels=methl,methStates=meths,methVars=methv,colData=cd1)
+#' cd1 <- DataFrame(
+#'   Group = rep(c("G1", "G2"), each = nc / 2),
+#'   row.names = LETTERS[1:nc]
+#' )
+#' OBJ2 <- cBSDMC(
+#'   rowRanges = r1, methReads = methc, totalReads = metht,
+#'   methLevels = methl, methStates = meths, methVars = methv, colData = cd1
+#' )
 #' OBJ2
 #' @exportMethod cBSDMC
 setGeneric("cBSDMC", function(
-    methReads, totalReads, methLevels, rowRanges, colData = DataFrame(
-        row.names = colnames(methReads)), metadata = list(), ...
-    ) standardGeneric( "cBSDMC"), signature = c(
-        "methReads", "totalReads", "methLevels", "rowRanges"))
+    methReads, totalReads, methLevels, rowRanges,
+    colData = DataFrame(row.names = colnames(methReads) ),
+    metadata = list(), ...) standardGeneric("cBSDMC"),
+    signature = c("methReads", "totalReads", "methLevels", "rowRanges"))
 
 #' @title methReads method
 #' @description Returns \code{methReads} stored in \code{\link{BSDMC-class}}
@@ -45,15 +51,21 @@ setGeneric("cBSDMC", function(
 #' @inheritParams params
 #' @return A matrix
 #' @examples
-#' nr <- 150; nc <- 8
+#' nr <- 150
+#' nc <- 8
 #' metht <- matrix(as.integer(runif(nr * nc, 0, 100)), nr)
-#' methc <- matrix(rbinom(n=nr*nc,c(metht),prob = runif(nr*nc)),nr,nc)
-#' methl<-methc/metht
-#' r1 <- GRanges(rep('chr1', nr), IRanges(1:nr, width=1), strand='*')
+#' methc <- matrix(rbinom(n = nr * nc, c(metht), prob = runif(nr * nc)), nr, nc)
+#' methl <- methc / metht
+#' r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
 #' names(r1) <- 1:nr
-#' cd1 <- DataFrame(Group=rep(c('G1','G2'),each=nc/2),row.names=LETTERS[1:nc])
-#' OBJ1 <- cBSDMC(rowRanges=r1,methReads=methc,totalReads=metht,
-#' methLevels=methl,colData=cd1)
+#' cd1 <- DataFrame(
+#'   Group = rep(c("G1", "G2"), each = nc / 2),
+#'   row.names = LETTERS[1:nc]
+#' )
+#' OBJ1 <- cBSDMC(
+#'   rowRanges = r1, methReads = methc, totalReads = metht,
+#'   methLevels = methl, colData = cd1
+#' )
 #' methReads(OBJ1)
 #' @exportMethod methReads
 setGeneric("methReads", function(object) standardGeneric("methReads"))
@@ -77,15 +89,21 @@ setGeneric("methReads<-", function(object,value) standardGeneric("methReads<-"))
 #' @inheritParams params
 #' @return A matrix
 #' @examples
-#' nr <- 150; nc <- 8
+#' nr <- 150
+#' nc <- 8
 #' metht <- matrix(as.integer(runif(nr * nc, 0, 100)), nr)
-#' methc <- matrix(rbinom(n=nr*nc,c(metht),prob = runif(nr*nc)),nr,nc)
-#' methl<-methc/metht
-#' r1 <- GRanges(rep('chr1', nr), IRanges(1:nr, width=1), strand='*')
+#' methc <- matrix(rbinom(n = nr * nc, c(metht), prob = runif(nr * nc)), nr, nc)
+#' methl <- methc / metht
+#' r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
 #' names(r1) <- 1:nr
-#' cd1 <- DataFrame(Group=rep(c('G1','G2'),each=nc/2),row.names=LETTERS[1:nc])
-#' OBJ1 <- cBSDMC(rowRanges=r1,methReads=methc,totalReads=metht,
-#' methLevels=methl,colData=cd1)
+#' cd1 <- DataFrame(
+#'   Group = rep(c("G1", "G2"), each = nc / 2),
+#'   row.names = LETTERS[1:nc]
+#' )
+#' OBJ1 <- cBSDMC(
+#'   rowRanges = r1, methReads = methc, totalReads = metht,
+#'   methLevels = methl, colData = cd1
+#' )
 #' totalReads(OBJ1)
 #' @exportMethod totalReads
 setGeneric("totalReads", function(object) standardGeneric("totalReads"))
@@ -99,7 +117,7 @@ setGeneric("totalReads", function(object) standardGeneric("totalReads"))
 #' @examples
 #' totalReads(OBJ1) <- metht
 #' @exportMethod totalReads<-
-setGeneric("totalReads<-", function(object,value)
+setGeneric("totalReads<-", function(object, value)
     standardGeneric("totalReads<-"))
 
 #' @title methLevels method
@@ -110,15 +128,21 @@ setGeneric("totalReads<-", function(object,value)
 #' @inheritParams params
 #' @return A matrix
 #' @examples
-#' nr <- 150; nc <- 8
+#' nr <- 150
+#' nc <- 8
 #' metht <- matrix(as.integer(runif(nr * nc, 0, 100)), nr)
-#' methc <- matrix(rbinom(n=nr*nc,c(metht),prob = runif(nr*nc)),nr,nc)
-#' methl<-methc/metht
-#' r1 <- GRanges(rep('chr1', nr), IRanges(1:nr, width=1), strand='*')
+#' methc <- matrix(rbinom(n = nr * nc, c(metht), prob = runif(nr * nc)), nr, nc)
+#' methl <- methc / metht
+#' r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
 #' names(r1) <- 1:nr
-#' cd1 <- DataFrame(Group=rep(c('G1','G2'),each=nc/2),row.names=LETTERS[1:nc])
-#' OBJ1 <- cBSDMC(rowRanges=r1,methReads=methc,totalReads=metht,
-#' methLevels=methl,colData=cd1)
+#' cd1 <- DataFrame(
+#'   Group = rep(c("G1", "G2"), each = nc / 2),
+#'   row.names = LETTERS[1:nc]
+#' )
+#' OBJ1 <- cBSDMC(
+#'   rowRanges = r1, methReads = methc, totalReads = metht,
+#'   methLevels = methl, colData = cd1
+#' )
 #' methLevels(OBJ1)
 #' @exportMethod methLevels
 setGeneric("methLevels", function(object) standardGeneric("methLevels"))
@@ -145,18 +169,29 @@ setGeneric("methLevels<-", function(object, value)
 #' @return A \code{\link{BSDMC-class}} or \code{\link{BSDMC-class}}
 #' @examples
 #' set.seed(1980)
-#' nr <- 150; nc <- 8
-#' metht <- matrix(as.integer(runif(nr * nc*2, 0, nr)), nr)
-#' methc <- matrix(rbinom(n=nr*nc,c(metht),prob = runif(nr*nc*2)),nr,nc*2)
-#' methl <- methc/metht
-#' r1 <- GRanges(rep('chr1', nr), IRanges(1:nr, width=1), strand='*')
+#' nr <- 150
+#' nc <- 8
+#' metht <- matrix(as.integer(runif(nr * nc * 2, 0, nr)), nr)
+#' methc <- matrix(
+#'   rbinom(n = nr * nc, c(metht), prob = runif(nr * nc * 2)),
+#'   nr, nc * 2
+#' )
+#' methl <- methc / metht
+#' r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
 #' names(r1) <- 1:nr
-#' cd1 <- DataFrame(Group=rep('G1',each=nc),row.names=LETTERS[1:nc])
-#' OBJ1 <- cBSDMC(rowRanges=r1,methReads=methc[,1:nc],totalReads=metht[,1:nc],
-#' methLevels=methl[,1:nc],colData=cd1)
-#' cd2 <- DataFrame(Group=rep('G2',each=nc),row.names=LETTERS[nc+1:nc])
-#' OBJ2 <- cBSDMC(rowRanges=r1,methReads=methc[,nc+1:nc],totalReads=
-#' metht[,nc+1:nc],methLevels=methl[,nc+1:nc],colData=cd2)
+#' cd1 <- DataFrame(Group = rep("G1", each = nc), row.names = LETTERS[1:nc])
+#' OBJ1 <- cBSDMC(
+#'   rowRanges = r1, methReads = methc[, 1:nc], totalReads = metht[, 1:nc],
+#'   methLevels = methl[, 1:nc], colData = cd1
+#' )
+#' cd2 <- DataFrame(
+#'   Group = rep("G2", each = nc),
+#'   row.names = LETTERS[nc + 1:nc]
+#' )
+#' OBJ2 <- cBSDMC(
+#'   rowRanges = r1, methReads = methc[, nc + 1:nc], totalReads =
+#'     metht[, nc + 1:nc], methLevels = methl[, nc + 1:nc], colData = cd2
+#' )
 #' OBJ3 <- combine(OBJ1, OBJ2)
 #' OBJ3
 #' @exportMethod combine
@@ -172,11 +207,14 @@ setGeneric("combine", function(obj1, obj2) standardGeneric("combine"))
 #' @inheritParams params
 #' @return A \code{\link{BSDMC-class}} object
 #' @examples
-#' fn <- list.files(system.file('extdata',package = 'DMCHMM'))
-#' fn.f <- list.files(system.file('extdata',package='DMCHMM'), full.names=TRUE)
+#' fn <- list.files(system.file("extdata", package = "DMCHMM"))
+#' fn.f <- list.files(system.file("extdata", package = "DMCHMM"),
+#'   full.names = TRUE
+#' )
 #' OBJ <- readBismark(fn.f, fn)
-#' cdOBJ <- DataFrame(Cell = factor(c('BC', 'TC','Mono'),
-#' labels = c('BC', 'TC', 'Mono')), row.names = c('BCU1568','BCU173','BCU551'))
+#' cdOBJ <- DataFrame(Cell = factor(c("BC", "TC", "Mono"),
+#'   labels = c("BC", "TC", "Mono")
+#' ), row.names = c("BCU1568", "BCU173", "BCU551"))
 #' colData(OBJ) <- cdOBJ
 #' OBJ
 #' @exportMethod readBismark
@@ -193,11 +231,14 @@ setGeneric("readBismark", function(files, colData)
 #' @import grDevices
 #' @import rtracklayer
 #' @examples
-#' fn <- list.files(system.file('extdata',package = 'DMCHMM'))
-#' fn.f <- list.files(system.file('extdata',package='DMCHMM'), full.names=TRUE)
+#' fn <- list.files(system.file("extdata", package = "DMCHMM"))
+#' fn.f <- list.files(system.file("extdata", package = "DMCHMM"),
+#'   full.names = TRUE
+#' )
 #' OBJ <- readBismark(fn.f, fn)
-#' cdOBJ <- DataFrame(Cell = factor(c('BC', 'TC','Mono'),
-#' labels = c('BC', 'TC', 'Mono')), row.names = c('BCU1568','BCU173','BCU551'))
+#' cdOBJ <- DataFrame(Cell = factor(c("BC", "TC", "Mono"),
+#'   labels = c("BC", "TC", "Mono")
+#' ), row.names = c("BCU1568", "BCU173", "BCU551"))
 #' colData(OBJ) <- cdOBJ
 #' writeBED(OBJ)
 #' @exportMethod writeBED
@@ -223,23 +264,32 @@ setGeneric("writeBED", function(object, name, file) standardGeneric("writeBED"))
 #' @importFrom arm bayesglm
 #' @importFrom matrixStats rowVars
 #' @importFrom fastDummies dummy_cols
+#' @importFrom matrixStats colQuantiles
 #' @examples
 #' set.seed(1980)
-#' nr <- 1000; nc <- 4
+#' nr <- 1000
+#' nc <- 4
 #' metht <- matrix(as.integer(runif(nr * nc, 0, 100)), nr)
-#' methc <- matrix(rbinom(n=nr*nc,c(metht),prob = runif(nr*nc)),nr,nc)
-#' methl <- methc/metht
-#' r1 <- GRanges(rep('chr1', nr), IRanges(1:nr, width=1), strand='*')
+#' methc <- matrix(rbinom(n = nr * nc, c(metht), prob = runif(nr * nc)), nr, nc)
+#' methl <- methc / metht
+#' r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
 #' names(r1) <- 1:nr
-#' cd1 <- DataFrame(Group=rep(c('G1','G2'),each=nc/2),row.names=LETTERS[1:nc])
-#' OBJ1 <- cBSDMC(rowRanges=r1,methReads=methc,totalReads=metht,
-#' methLevels=methl,colData=cd1)
-#' OBJ2 <- findDMCFB(OBJ1, bwa=10, bwb=10, nBurn=50, nMC=50, nThin=1,
-#' alpha=0.05, nCores=2, pSize=500, sfiles=FALSE)
+#' cd1 <- DataFrame(
+#'   Group = rep(c("G1", "G2"), each = nc / 2),
+#'   row.names = LETTERS[1:nc]
+#' )
+#' OBJ1 <- cBSDMC(
+#'   rowRanges = r1, methReads = methc, totalReads = metht,
+#'   methLevels = methl, colData = cd1
+#' )
+#' OBJ2 <- findDMCFB(OBJ1,
+#'   bwa = 10, bwb = 10, nBurn = 50, nMC = 50, nThin = 1,
+#'   alpha = 0.05, nCores = 2, pSize = 500, sfiles = FALSE
+#' )
 #' OBJ2
 #' @exportMethod findDMCFB
-setGeneric("findDMCFB", function(
-    object, bwa, bwb, nBurn, nMC, nThin, alpha, sdv, nCores, pSize, sfiles)
+setGeneric("findDMCFB", function(object, bwa, bwb, nBurn, nMC, nThin, alpha,
+    sdv, nCores, pSize, sfiles)
     standardGeneric("findDMCFB"))
 
 #' @title plotDMCFB method
@@ -258,18 +308,26 @@ setGeneric("findDMCFB", function(
 #' @return Plot
 #' @examples
 #' set.seed(1980)
-#' nr <- 1000; nc <- 4
+#' nr <- 1000
+#' nc <- 4
 #' metht <- matrix(as.integer(runif(nr * nc, 0, 100)), nr)
-#' methc <- matrix(rbinom(n=nr*nc,c(metht),prob = runif(nr*nc)),nr,nc)
-#' methl <- methc/metht
-#' r1 <- GRanges(rep('chr1', nr), IRanges(1:nr, width=1), strand='*')
+#' methc <- matrix(rbinom(n = nr * nc, c(metht), prob = runif(nr * nc)), nr, nc)
+#' methl <- methc / metht
+#' r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
 #' names(r1) <- 1:nr
-#' cd1 <- DataFrame(Group=rep(c('G1','G2'),each=nc/2),row.names=LETTERS[1:nc])
-#' OBJ1 <- cBSDMC(rowRanges=r1,methReads=methc,totalReads=metht,
-#' methLevels=methl,colData=cd1)
-#' OBJ2 <- findDMCFB(OBJ1, bwa=10, bwb=10, nBurn=50, nMC=50, nThin=1,
-#' alpha=0.05, nCores=2, pSize=500, sfiles=FALSE)
+#' cd1 <- DataFrame(
+#'   Group = rep(c("G1", "G2"), each = nc / 2),
+#'   row.names = LETTERS[1:nc]
+#' )
+#' OBJ1 <- cBSDMC(
+#'   rowRanges = r1, methReads = methc, totalReads = metht,
+#'   methLevels = methl, colData = cd1
+#' )
+#' OBJ2 <- findDMCFB(OBJ1,
+#'   bwa = 10, bwb = 10, nBurn = 50, nMC = 50, nThin = 1,
+#'   alpha = 0.05, nCores = 2, pSize = 500, sfiles = FALSE
+#' )
 #' plotDMCFB(OBJ2)
 #' @exportMethod plotDMCFB
-setGeneric("plotDMCFB", function(
-    object, region, nSplit, parList) standardGeneric("plotDMCFB"))
+setGeneric("plotDMCFB", function(object, region, nSplit,parList)
+    standardGeneric("plotDMCFB"))

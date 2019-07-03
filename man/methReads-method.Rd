@@ -34,15 +34,21 @@ Returns \code{methReads} stored in \code{\link{BSDMC-class}}
 Assigns \code{methReads} to \code{\link{BSDMC-class}}
 }
 \examples{
-nr <- 150; nc <- 8
+nr <- 150
+nc <- 8
 metht <- matrix(as.integer(runif(nr * nc, 0, 100)), nr)
-methc <- matrix(rbinom(n=nr*nc,c(metht),prob = runif(nr*nc)),nr,nc)
-methl<-methc/metht
-r1 <- GRanges(rep('chr1', nr), IRanges(1:nr, width=1), strand='*')
+methc <- matrix(rbinom(n = nr * nc, c(metht), prob = runif(nr * nc)), nr, nc)
+methl <- methc / metht
+r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
 names(r1) <- 1:nr
-cd1 <- DataFrame(Group=rep(c('G1','G2'),each=nc/2),row.names=LETTERS[1:nc])
-OBJ1 <- cBSDMC(rowRanges=r1,methReads=methc,totalReads=metht,
-methLevels=methl,colData=cd1)
+cd1 <- DataFrame(
+  Group = rep(c("G1", "G2"), each = nc / 2),
+  row.names = LETTERS[1:nc]
+)
+OBJ1 <- cBSDMC(
+  rowRanges = r1, methReads = methc, totalReads = metht,
+  methLevels = methl, colData = cd1
+)
 methReads(OBJ1)
 methReads(OBJ1) <- methc
 }

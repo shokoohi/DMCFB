@@ -36,7 +36,7 @@ names of the \code{\link{SummarizedExperiment}} object. The length of the
 rows of the matrices in \code{assays}. If \code{rowRanges} is missing, a
 \code{\link{SummarizedExperiment}} instance is returned.}
 
-\item{colData}{Object of class \code{"DataFrame"} containing information on
+\item{colData}{Object of class \code{'DataFrame'} containing information on
 variable values of the samples}
 
 \item{metadata}{A \code{list} of storing MCMC samples or DMCs}
@@ -63,17 +63,23 @@ the range. Rows may or may not have row names; they often will not.
 }
 \examples{
 set.seed(1980)
-nr <- 150; nc <- 8
+nr <- 150
+nc <- 8
 metht <- matrix(as.integer(runif(nr * nc, 0, 100)), nr)
-methc <- matrix(rbinom(n=nr*nc,c(metht),prob = runif(nr*nc)),nr,nc)
+methc <- matrix(rbinom(n = nr * nc, c(metht), prob = runif(nr * nc)), nr, nc)
 meths <- matrix(as.integer(runif(nr * nc, 0, 10)), nr)
-methl <- methc/metht
+methl <- methc / metht
 methv <- matrix((runif(nr * nc, 0.1, 0.5)), nr)
-r1 <- GRanges(rep('chr1', nr), IRanges(1:nr, width=1), strand='*')
+r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
 names(r1) <- 1:nr
-cd1 <- DataFrame(Group=rep(c('G1','G2'),each=nc/2),row.names=LETTERS[1:nc])
-OBJ2 <- cBSDMC(rowRanges=r1,methReads=methc,totalReads=metht,
-methLevels=methl,methStates=meths,methVars=methv,colData=cd1)
+cd1 <- DataFrame(
+  Group = rep(c("G1", "G2"), each = nc / 2),
+  row.names = LETTERS[1:nc]
+)
+OBJ2 <- cBSDMC(
+  rowRanges = r1, methReads = methc, totalReads = metht,
+  methLevels = methl, methStates = meths, methVars = methv, colData = cd1
+)
 OBJ2
 }
 \author{

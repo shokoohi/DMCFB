@@ -24,7 +24,7 @@ names of the \code{\link{SummarizedExperiment}} object. The length of the
 rows of the matrices in \code{assays}. If \code{rowRanges} is missing, a
 \code{\link{SummarizedExperiment}} instance is returned.}
 
-\item{colData}{Object of class \code{"DataFrame"} containing information on
+\item{colData}{Object of class \code{'DataFrame'} containing information on
 variable values of the samples}
 
 \item{metadata}{A \code{list} of storing MCMC samples or DMCs}

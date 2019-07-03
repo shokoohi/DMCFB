@@ -1,13 +1,21 @@
 ---
 title: "Identifying DMCs using Bayesian functional regressions in BS-Seq data"
-author: "Farhad Shokoohi"
-date: "`r Sys.Date()`"
+author:
+- name: Farhad Shokoohi
+  affiliation: Department of Mathematical Sciences, 
+    University of Nevada, Las Vegas
+  email: shokoohi@icloud.com 
+output:
+  BiocStyle::html_document:
+    toc_float: true
+  BiocStyle::pdf_document: default
 package: DMCFB
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteEngine{knitr::knitr}
-  %\VignetteIndexEntry{Sending Messages With Gmailr}
-  %\usepackage[utf8]{inputenc}
+abstract: |
+  Instructions on using the DMCFB package.
+vignette: |
+  %\VignetteIndexEntry{Identifying DMCs using Bayesian functional regressions in BS-Seq data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
@@ -23,8 +31,8 @@ regression models.
 In what follows we provides some guidlines on how to read your data and analyze
 them.
 
-## Reading data
-### Reading bisulfite data (using files)
+# Reading data
+## Reading bisulfite data (using files)
 The R-method `readBismark()` is used to read bisulfite data files that are 
 created by `Bismark`. Each file must include six columns, with no header, that 
 represent 
@@ -46,7 +54,7 @@ to the object using `DataFrame` function.
 As an example, we have provided three files in the package that can be read as 
 follows:
 
-```{r, eval=TRUE, message=FALSE}
+```{r, eval=TRUE}
 library(DMCFB)
 fn <- list.files(system.file("extdata",package = "DMCFB"))
 fn.f <- list.files(system.file("extdata",package="DMCFB"), full.names=TRUE)
@@ -58,7 +66,7 @@ OBJ
 ```
 
 
-### Reading bisulfite data (using matrices)
+## Reading bisulfite data (using matrices)
 Alternatively, one can use two integer matrices and a `DataFrame` to create
 `BSDMC` object using `cBSDMC()` function. One matrix includes the read-depth and
 the other one includes methylation reads. The columns of these matrices 
@@ -72,7 +80,8 @@ The following exampel shows the details.
 ```{r, eval=TRUE, message=FALSE}
 library(DMCFB)
 set.seed(1980)
-nr <- 1000; nc <- 8
+nr <- 1000
+nc <- 8
 metht <- matrix(as.integer(runif(nr * nc, 0, 100)), nr)
 methc <- matrix(rbinom(n=nr*nc,c(metht),prob = runif(nr*nc)),nr,nc)
 methl <- methc/metht
@@ -80,11 +89,11 @@ r1 <- GRanges(rep('chr1', nr), IRanges(1:nr, width=1), strand='*')
 names(r1) <- 1:nr
 cd1 <- DataFrame(Group=rep(c('G1','G2'),each=nc/2),row.names=LETTERS[1:nc])
 OBJ2 <- cBSDMC(rowRanges=r1,methReads=methc,totalReads=metht,
-methLevels=methl,colData=cd1)
+  methLevels=methl,colData=cd1)
 OBJ2
 ```
 
-## Identifying DMCs
+# Identifying DMCs
 To identify DMCs, one need to use the function `findDMCFB()` function. 
 The function
 
@@ -107,26 +116,27 @@ namelist.new <- namelist.new[c(indBC,indMono,indTC)]
 namelist.new.f <- namelist.new.f[c(indBC,indMono,indTC)]
 BLKDat <- readBismark(namelist.new.f, namelist.new)
 colData1 <- DataFrame(Group = factor(
-    c(rep("BC",length(indBC)), rep("Mono",length(indMono)), 
-      rep("TC", length(indTC))), levels = c("BC", "Mono", "TC")), 
-    row.names = colnames(BLKData))
+  c(rep("BC",length(indBC)), rep("Mono",length(indMono)), 
+  rep("TC", length(indTC))), levels = c("BC", "Mono", "TC")), 
+  row.names = colnames(BLKData))
 colData(BLKDat) <- colData1
 BLK.BC.Mono.TC <- sort(BLKDat)
 DMC.obj = findDMCFB(object = BLKDat, bwa = 30, bwb = 30, nBurn = 300, nMC = 300,
-                    nThin = 1, alpha = 5e-5, pSize = 500, sfiles = FALSE)
+  nThin = 1, alpha = 5e-5, pSize = 500, sfiles = FALSE)
 ```
 
 
-## Figures
+# Figures
 To plot DMCs one can use the `plotDMCFB()` function to plot an `BSDMC` object 
 that resulted from running `findDMCFB()` function. 
 To illustrate use the following example:
 
 
-```{r, fig.width=7}
+```{r, fig.width=6}
 library(DMCFB)
 set.seed(1980)
-nr <- 1000; nc <- 8
+nr <- 1000
+nc <- 8
 metht <- matrix(as.integer(runif(nr * nc, 0, 100)), nr)
 methc <- matrix(rbinom(n=nr*nc,c(metht),prob = runif(nr*nc)),nr,nc)
 methl <- methc/metht
@@ -134,9 +144,14 @@ r1 <- GRanges(rep('chr1', nr), IRanges(1:nr, width=1), strand='*')
 names(r1) <- 1:nr
 cd1 <- DataFrame(Group=rep(c('G1','G2'),each=nc/2),row.names=LETTERS[1:nc])
 OBJ1 <- cBSDMC(rowRanges=r1,methReads=methc,totalReads=metht,
-methLevels=methl,colData=cd1)
+  methLevels=methl,colData=cd1)
 OBJ2 = findDMCFB(object = OBJ1, bwa = 30, bwb = 30, nBurn = 10, nMC = 10,
-                    nThin = 1, alpha = 0.05, pSize = 500, sfiles = FALSE)
+  nThin = 1, alpha = 0.05, pSize = 500, sfiles = FALSE)
 plotDMCFB(OBJ2, region = c(1,400), nSplit = 2)
+```
+
+# Session info
+```{r}
+sessionInfo()
 ```
 

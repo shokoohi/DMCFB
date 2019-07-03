@@ -1,39 +1,33 @@
 Package: DMCFB
 Type: Package
-Title: Differentially Methylated Cytosines via a Bayesian Functional Approach
-Version: 0.99.2
+Title: Differentially Methylated Cytosines via a Bayesian Functional
+        Approach
+Version: 0.99.3
 Author: Farhad Shokoohi
 Maintainer: Farhad Shokoohi <shokoohi@icloud.com>
-Description: A pipeline for identifying differentially methylated cytosines
-    using a Bayesian functional regression model in bisulfite sequencing data.
-Depends: R (>= 3.6.0),
-    SummarizedExperiment,
-    methods,
-    S4Vectors,
-    BiocParallel,
-    GenomicRanges,
-    IRanges
-Imports: utils,
-    stats,
-    speedglm,
-    MASS,
-    data.table,
-    splines,
-    arm,
-    grDevices,
-    rtracklayer,
-    benchmarkme,
-    tibble,
-    matrixStats,
-    fastDummies,
-    graphics
-Suggests: testthat, 
-    knitr
-VignetteBuilder:
-    knitr
-biocViews: DifferentialMethylation, Sequencing, Coverage, Bayesian, Regression
+Description: DMCFB is a pipeline for identifying differentially methylated 
+    cytosines using a Bayesian functional regression model in bisulfite 
+    sequencing data. By using a functional regression data model, it tries to 
+    capture position-specific, group-specific and other covariates-specific 
+    methylation patterns as well as spatial correlation patterns and unknown 
+    underlying models of methylation data. It is robust and flexible with 
+    respect to the true underlying models and inclusion of any covariates, and 
+    the missing values are imputed using spatial correlation between positions 
+    and samples. A Bayesian approach is adopted for estimation and inference in 
+    the proposed method.
+Depends: R (>= 3.6.0), SummarizedExperiment, methods, S4Vectors,
+        BiocParallel, GenomicRanges, IRanges
+Imports: utils, stats, speedglm, MASS, data.table, splines, arm,
+        grDevices, rtracklayer, benchmarkme, tibble, matrixStats,
+        fastDummies, graphics
+Suggests: testthat, knitr, BiocStyle, rmarkdown
+VignetteBuilder: knitr
+biocViews: DifferentialMethylation, Sequencing, Coverage, Bayesian,
+        Regression
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 BugReports: https://github.com/shokoohi/DMCFB/issues
 RoxygenNote: 6.1.1
+NeedsCompilation: no
+Packaged: 2019-07-03 14:55:49 UTC; farhad

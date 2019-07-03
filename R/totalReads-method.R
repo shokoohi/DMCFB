@@ -13,5 +13,7 @@ setMethod("totalReads", signature(object = "BSDMC"), .totalReads)
 
 #' @rdname totalReads-method
 #' @aliases totalReads-method totalReads<-
-setReplaceMethod("totalReads", signature(object = "BSDMC", value = "matrix"),
-    .replace.totalReads)
+setReplaceMethod(
+    "totalReads", signature(object = "BSDMC", value = "matrix"),
+    .replace.totalReads
+)
