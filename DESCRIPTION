@@ -2,7 +2,7 @@ Package: DMCFB
 Type: Package
 Title: Differentially Methylated Cytosines via a Bayesian Functional
         Approach
-Version: 0.99.4
+Version: 0.99.5
 Author: Farhad Shokoohi
 Maintainer: Farhad Shokoohi <shokoohi@icloud.com>
 Description: DMCFB is a pipeline for identifying differentially methylated 
