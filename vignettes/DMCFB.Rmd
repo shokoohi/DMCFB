@@ -5,17 +5,15 @@ author:
   affiliation: Department of Mathematical Sciences, 
     University of Nevada, Las Vegas
   email: shokoohi@icloud.com 
-output:
-  BiocStyle::html_document:
-    toc_float: true
-  BiocStyle::pdf_document: default
+date: "`r doc_date()`"
 package: DMCFB
-abstract: |
-  Instructions on using the DMCFB package.
-vignette: |
+abstract: "`Instructions on using the DMCFB package.`"
+vignette: >
   %\VignetteIndexEntry{Identifying DMCs using Bayesian functional regressions in BS-Seq data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document  
 ---
 
 ```{r setup, include = FALSE}
