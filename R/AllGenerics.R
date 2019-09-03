@@ -221,29 +221,6 @@ setGeneric("combine", function(obj1, obj2) standardGeneric("combine"))
 setGeneric("readBismark", function(files, colData)
     standardGeneric("readBismark"))
 
-#' @title writeBED method
-#' @description write BS-Seq data to BED files
-#' @author Farhad Shokoohi <shokoohi@icloud.com>
-#' @name writeBED-method
-#' @inheritParams params
-#' @import S4Vectors
-#' @return BED files
-#' @import grDevices
-#' @import rtracklayer
-#' @examples
-#' fn <- list.files(system.file("extdata", package = "DMCHMM"))
-#' fn.f <- list.files(system.file("extdata", package = "DMCHMM"),
-#'   full.names = TRUE
-#' )
-#' OBJ <- readBismark(fn.f, fn)
-#' cdOBJ <- DataFrame(Cell = factor(c("BC", "TC", "Mono"),
-#'   labels = c("BC", "TC", "Mono")
-#' ), row.names = c("BCU1568", "BCU173", "BCU551"))
-#' colData(OBJ) <- cdOBJ
-#' writeBED(OBJ)
-#' @exportMethod writeBED
-setGeneric("writeBED", function(object, name, file) standardGeneric("writeBED"))
-
 #' @title findDMCFB method
 #' @description DMC identification via Bayesian functional regression models
 #' @author Farhad Shokoohi <shokoohi@icloud.com>

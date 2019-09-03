@@ -1,8 +1,7 @@
 Package: DMCFB
 Type: Package
-Title: Differentially Methylated Cytosines via a Bayesian Functional
-        Approach
-Version: 0.99.5
+Title: Differentially Methylated Cytosines via a Bayesian Functional Approach
+Version: 0.99.0
 Author: Farhad Shokoohi
 Maintainer: Farhad Shokoohi <shokoohi@icloud.com>
 Description: DMCFB is a pipeline for identifying differentially methylated 
@@ -15,19 +14,38 @@ Description: DMCFB is a pipeline for identifying differentially methylated
     the missing values are imputed using spatial correlation between positions 
     and samples. A Bayesian approach is adopted for estimation and inference in 
     the proposed method.
-Depends: R (>= 3.6.0), SummarizedExperiment, methods, S4Vectors,
-        BiocParallel, GenomicRanges, IRanges
-Imports: utils, stats, speedglm, MASS, data.table, splines, arm,
-        grDevices, rtracklayer, benchmarkme, tibble, matrixStats,
-        fastDummies, graphics
-Suggests: testthat, knitr, BiocStyle, rmarkdown
-VignetteBuilder: knitr
-biocViews: DifferentialMethylation, Sequencing, Coverage, Bayesian,
-        Regression
+Depends: R (>= 3.6.0),
+    SummarizedExperiment,
+    methods,
+    S4Vectors,
+    BiocParallel,
+    GenomicRanges,
+    IRanges,
+    GenomeInfoDb
+Imports: utils,
+    stats,
+    speedglm,
+    MASS,
+    data.table,
+    splines,
+    arm,
+    grDevices,
+    rtracklayer,
+    benchmarkme,
+    tibble,
+    matrixStats,
+    fastDummies,
+    graphics,
+    BiocStyle
+Suggests: testthat, 
+    knitr,
+    BiocStyle,
+    rmarkdown
+VignetteBuilder:
+    knitr
+biocViews: DifferentialMethylation, Sequencing, Coverage, Bayesian, Regression
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 BugReports: https://github.com/shokoohi/DMCFB/issues
 RoxygenNote: 6.1.1
-NeedsCompilation: no
-Packaged: 2019-07-03 19:05:01 UTC; farhad

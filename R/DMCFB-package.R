@@ -9,8 +9,7 @@
 #' \code{\link{findDMCFB}},
 #' \code{\link{plotDMCFB}},
 #' \code{\link{cBSDMC}},
-#' \code{\link{readBismark}},
-#' \code{\link{writeBED}}.
+#' \code{\link{readBismark}}.
 #' @section \code{BSDMC} objects:
 #' \code{\link{BSDMC-class}}
 #'
