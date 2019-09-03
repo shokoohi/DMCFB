@@ -39,7 +39,6 @@ Imports: utils,
     BiocStyle
 Suggests: testthat, 
     knitr,
-    BiocStyle,
     rmarkdown
 VignetteBuilder:
     knitr
