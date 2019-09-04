@@ -22,7 +22,11 @@
 
     xp <- start(object)
     nPos <- length(xp)
+    if(.Platform$OS.type=="unix"){
     maxram <- (get_ram())[[1]] / 1e+9
+    }else{
+        maxram <- memory.size(max = FALSE) / 1e+9
+    }
 
     if (missing(nCores)) {
     if (maxram / multicoreWorkers() > 5) {
