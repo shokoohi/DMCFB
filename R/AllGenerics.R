@@ -242,6 +242,7 @@ setGeneric("readBismark", function(files, colData)
 #' @importFrom matrixStats rowVars
 #' @importFrom fastDummies dummy_cols
 #' @importFrom matrixStats colQuantiles
+#' @importFrom utils memory.size
 #' @examples
 #' set.seed(1980)
 #' nr <- 1000
