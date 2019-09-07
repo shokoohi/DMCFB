@@ -202,7 +202,7 @@ setGeneric("combine", function(obj1, obj2) standardGeneric("combine"))
 #' @author Farhad Shokoohi <shokoohi@icloud.com>
 #' @name readBismark-method
 #' @import GenomicRanges
-#' @import IRanges
+#' @importFrom IRanges IRanges
 #' @import S4Vectors
 #' @inheritParams params
 #' @return A \code{\link{BSDMC-class}} object
@@ -232,6 +232,7 @@ setGeneric("readBismark", function(files, colData)
 #' @import S4Vectors
 #' @import MASS
 #' @importFrom stats as.formula binomial coefficients coef contrasts glm logLik
+#' @importFrom stats median
 #' @importFrom benchmarkme get_ram
 #' @importFrom speedglm speedglm
 #' @importFrom data.table is.data.table
@@ -279,7 +280,6 @@ setGeneric("findDMCFB", function(object, bwa, bwb, nBurn, nMC, nThin, alpha,
 #' @import BiocParallel
 #' @import GenomicRanges
 #' @import S4Vectors
-#' @import grDevices
 #' @import rtracklayer
 #' @import graphics
 #' @importFrom graphics abline axis layout legend lines par points segments
