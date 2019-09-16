@@ -265,7 +265,7 @@
 
         GammaDeltaEta.mean <- Xgde %*% GammaDeltaEta.old
 
-        options(show.error.messages = FALSE)
+        #options(show.error.messages = FALSE)
         suppressWarnings(fit0 <- try(
         glm(cbind(data.all[, 1], data.all[, 2] - data.all[
             , 1
@@ -275,21 +275,21 @@
         ),
         silent = TRUE
         ))
-        options(show.error.messages = TRUE)
+        #options(show.error.messages = TRUE)
         if ((is(fit0)[1] == "try-error")) {
-        options(warn = -1)
+        #options(warn = -1)
         fit0 <- bayesglm(cbind(data.all[, 1], data.all[, 2] - data.all[, 1]) ~
         offset(GammaDeltaEta.mean + Beta.mean) - 1,
         family = binomial(logit), maxit = 1
         )
-        options(warn = 0)
+        #options(warn = 0)
         } else if (sum(is.na(coefficients(fit0))) > 0) {
-        options(warn = -1)
+        #options(warn = -1)
         fit0 <- bayesglm(cbind(data.all[, 1], data.all[, 2] - data.all[, 1]) ~
         offset(GammaDeltaEta.mean + Beta.mean) - 1,
         family = binomial(logit), maxit = 1
         )
-        options(warn = 0)
+        #options(warn = 0)
         }
 
         # log.like = as.numeric(logLik(fit0))
@@ -303,7 +303,7 @@
             , 2
         ], Beta.mean, Xgde)
 
-        options(show.error.messages = FALSE)
+        #options(show.error.messages = FALSE)
         suppressWarnings(fitg <- try(
             speedglm(cbind(Y, m - Y) ~ offset(
             Beta.mean
@@ -312,30 +312,30 @@
             )),
             silent = TRUE
         ))
-        options(show.error.messages = TRUE)
+        #options(show.error.messages = TRUE)
 
         if ((is(fitg)[1] == "try-error")) {
-            options(warn = -1)
+            #options(warn = -1)
             fitg <- bayesglm(cbind(Y, m - Y) ~ offset(
             Beta.mean
             ) - 1 + Xgde, data = gdata, family = binomial(
             logit
             ), maxit = 1)
-            options(warn = 0)
+            #options(warn = 0)
             } else if (sum(is.na(coefficients(fitg))) > 0) {
-            options(warn = -1)
+            #options(warn = -1)
             fitg <- bayesglm(cbind(Y, m - Y) ~ offset(
             Beta.mean
             ) - 1 + Xgde,
             data = gdata,
             family = binomial(logit), maxit = 1
             )
-            options(warn = 0)
+            #options(warn = 0)
             }
 
             mle.Sig <- summary(fitg)$cov.unscaled
 
-            options(show.error.messages = FALSE)
+            #options(show.error.messages = FALSE)
             suppressWarnings(mle.Prec <- try(
             ginv(mle.Sig),
             silent = TRUE
@@ -344,22 +344,22 @@
             ginv(mle.Prec + GDEPrec),
             silent = TRUE
             ))
-            options(show.error.messages = TRUE)
+            #options(show.error.messages = TRUE)
 
             myw <- 0
             while (myw < 100 & ((is(mle.Prec)[1] == "try-error") | (
             is(Post.Cov)[1] == "try-error"))) {
             myw <- myw + 1
-            options(warn = -1)
+            #options(warn = -1)
             fitg <- bayesglm(cbind(Y, m - Y) ~ offset(
             Beta.mean
             ) - 1 + Xgde,
             data = gdata,
             family = binomial(logit), maxit = 1
             )
-            options(warn = 0)
+            #options(warn = 0)
 
-            options(show.error.messages = FALSE)
+            #options(show.error.messages = FALSE)
             suppressWarnings(mle.Prec <- try(
             ginv(mle.Sig),
             silent = TRUE
@@ -369,7 +369,7 @@
             ginv(mle.Prec + GDEPrec),
             silent = TRUE
             ))
-            options(show.error.messages = TRUE)
+            #options(show.error.messages = TRUE)
             }
 
             Post.mean <- Post.Cov %*% (mle.Prec %*% coef(fitg))
@@ -387,7 +387,7 @@
             ], Xns2
             )
 
-            options(show.error.messages = FALSE)
+            #options(show.error.messages = FALSE)
             suppressWarnings(fiti <- try(
             speedglm(cbind(Y, m - Y) ~ offset(
             GammaDeltaEta.mean
@@ -397,10 +397,10 @@
             ),
             silent = TRUE
             ))
-            options(show.error.messages = TRUE)
+            #options(show.error.messages = TRUE)
 
             if ((is(fiti)[1] == "try-error")) {
-            options(warn = -1)
+            #options(warn = -1)
             fiti <- bayesglm(cbind(Y, m - Y) ~ offset(
             GammaDeltaEta.mean
             ) - 1 + Xns2,
@@ -416,12 +416,12 @@
             data = idata,
             family = binomial(logit), maxit = 1
             )
-            options(warn = 0)
+            #options(warn = 0)
             }
 
             mle.Sig <- summary(fiti)$cov.unscaled
 
-            options(show.error.messages = FALSE)
+            #options(show.error.messages = FALSE)
             suppressWarnings(mle.Prec <- try(
             ginv(mle.Sig),
             silent = TRUE
@@ -431,10 +431,10 @@
             ginv(mle.Prec + BPrec),
             silent = TRUE
             ))
-            options(show.error.messages = TRUE)
+            #options(show.error.messages = TRUE)
 
             myw <- 0
-            options(warn = -1)
+            #options(warn = -1)
             while (((is(mle.Prec)[1] == "try-error") | (
             is(Post.Cov)[1] == "try-error")) & myw < 100) {
             myw <- myw + 1
@@ -448,7 +448,7 @@
 
             mle.Sig <- summary(fiti)$cov.unscaled
 
-            options(show.error.messages = FALSE)
+            #options(show.error.messages = FALSE)
             suppressWarnings(mle.Prec <- try(
             ginv(mle.Sig),
             silent = TRUE
@@ -458,16 +458,16 @@
             ginv(mle.Prec + BPrec),
             silent = TRUE
             ))
-            options(show.error.messages = TRUE)
+            #options(show.error.messages = TRUE)
             }
-            options(warn = 0)
+            #options(warn = 0)
 
             Post.mean <- Post.Cov %*% (mle.Prec %*% coef(fiti))
             Beta.old[i, ] <- mvrnorm(1, mu = Post.mean, Sigma = Post.Cov)
         }
         Beta.mean <- as.vector(Xns2 %*% t(Beta.old))
 
-        options(show.error.messages = FALSE)
+        #options(show.error.messages = FALSE)
         suppressWarnings(fit0 <- try(
             glm(cbind(data.all[, 1], data.all[, 2] - data.all[, 1]) ~
             offset(GammaDeltaEta.mean + Beta.mean) - 1,
@@ -475,18 +475,18 @@
             ),
             silent = TRUE
         ))
-        options(show.error.messages = TRUE)
+        #options(show.error.messages = TRUE)
 
         if ((is(fit0)[1] == "try-error")) {
-            options(warn = -1)
+            #options(warn = -1)
             fit0 <- bayesglm(cbind(data.all[, 1], data.all[, 2] - data.all[
             , 1
             ]) ~ offset(GammaDeltaEta.mean + Beta.mean) - 1,
             family = binomial(logit), maxit = 1
             )
-            options(warn = 0)
+            #options(warn = 0)
         } else if (sum(is.na(fit0$coefficients)) > 0) {
-            options(warn = -1)
+            #options(warn = -1)
             fit0 <- bayesglm(cbind(data.all[, 1], data.all[
             , 2
             ] - data.all[
@@ -494,7 +494,7 @@
             ]) ~ offset(GammaDeltaEta.mean + Beta.mean) - 1,
             family = binomial(logit), maxit = 1
             )
-            options(warn = 0)
+            #options(warn = 0)
         }
 
         # log.like = as.numeric(logLik(fit0))
