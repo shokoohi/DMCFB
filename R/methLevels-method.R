@@ -3,7 +3,7 @@
 }
 
 .replace.methLevels <- function(object, value) {
-    assays(object)$methLevels <- value
+    assays(object, withDimnames=FALSE)$methLevels <- value
     return(object)
 }
 

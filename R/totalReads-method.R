@@ -3,7 +3,7 @@
 }
 
 .replace.totalReads <- function(object, value) {
-    assays(object)$totalReads <- value
+    assays(object, withDimnames=FALSE)$totalReads <- value
     return(object)
 }
 
