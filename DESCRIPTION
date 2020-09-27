@@ -1,7 +1,7 @@
 Package: DMCFB
 Type: Package
 Title: Differentially Methylated Cytosines via a Bayesian Functional Approach
-Version: 1.3.2
+Version: 1.2.1
 Authors@R: c(person("Farhad", "Shokoohi", role = c("aut", "cre"),
                      email = "shokoohi@icloud.com", comment = c(ORCID = "0000-0002-6224-2609"))
               )
