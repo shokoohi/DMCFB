@@ -1,28 +1,30 @@
-.readBismark <- function(files, colData) {
+.readBismark <- function(files, colData, mc.cores) {
     if (nrow(colData) != length(files)) {
     stop("Row number of colData must equal length of files.")
     }
 
-    methData <- list()
+    methData = list()
 
-    for (i in seq_along(files)) {
-    cat(paste("Processing sample ", rownames(colData)[i], " ... \n", sep = ""))
+    optbp <- MulticoreParam(workers = mc.cores, progressbar = TRUE)
 
-    bismark <- scan(files[i],
-    skip = 0, sep = "\t", comment.char = "#",
-    what = list(
-    "character", integer(), NULL, NULL, integer(),
-    integer()
-    )
-    )
+    .runfile <- function(i){
+        cat(paste("\nProcessing sample ", rownames(colData)[i], " ... \n",
+            sep = ""))
 
-    methData[[i]] <- GRanges(
-    seqnames = bismark[[1]], ranges = IRanges(start = bismark[[
-    2]], width = 1), methylated = bismark[[5]], reads = bismark[[
-    5]] + bismark[[6]]
-    )
-    rm(bismark)
+        bismark <- scan(files[i], skip = 0, sep = "\t", comment.char = "#",
+            what = list("character", integer(), NULL, NULL, integer(),
+                integer()))
+
+        Datafile = GRanges(seqnames = bismark[[1]],
+                    ranges = IRanges(start = bismark[[2]],
+                        width = 1), methylated = bismark[[5]], reads = bismark[[5]] +
+                            bismark[[6]])
+
+        rm(bismark)
+        return(Datafile)
     }
+
+    methData <- bplapply(seq_along(files), .runfile, BPPARAM = optbp)
 
     cat("Building BSDMC object.\n")
 
@@ -70,21 +72,23 @@
 #' @rdname readBismark-method
 #' @aliases readBismark-method readBismark
 setMethod("readBismark", signature(
-    files = "character", colData = "DataFrame"), .readBismark)
+    files = "character", colData = "DataFrame", mc.cores = "numeric"),
+    .readBismark)
 
 #' @rdname readBismark-method
 #' @aliases readBismark-method readBismark
 setMethod("readBismark", signature = c(
-    files = "character", colData = "data.frame"), function(files, colData) {
+    files = "character", colData = "data.frame", mc.cores = "numeric"),
+    function(files, colData, mc.cores) {
     colData <- as(colData, "DataFrame")
-    .readBismark(files, colData)
+    .readBismark(files, colData, mc.cores)
 })
 
 #' @rdname readBismark-method
 #' @aliases readBismark-method readBismark
 setMethod("readBismark", signature = c(
-    files = "character", colData = "character"), function(
-        files, colData) {
+    files = "character", colData = "character", mc.cores = "numeric"), function(
+        files, colData, mc.cores) {
         colData <- DataFrame(row.names = colData)
-    .readBismark(files, colData)
+    .readBismark(files, colData, mc.cores)
 })

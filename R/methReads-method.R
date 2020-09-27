@@ -3,7 +3,7 @@
 }
 
 .replace.methReads <- function(object, value) {
-    assays(object)$methReads <- value
+    assays(object, withDimnames = FALSE)$methReads <- value
     return(object)
 }
 

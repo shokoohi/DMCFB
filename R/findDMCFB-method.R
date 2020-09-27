@@ -786,10 +786,9 @@
         2
     ] - 1) / 5):(1 + 2 * (dim(rowData(object))[
         2
-    ] - 1) / 5)]), levels = c(1, 2, 3))) / dim(object)[1])
+    ] - 1) / 5)]), levels = c("Equal", "Hyper", "Hypo"))) / dim(object)[1])
     rownames(res) <- c("Equal(%)", "Hyper(%)", "Hypo(%)")
-    colnames(res) <- names(rowData(object))[2 + (dim(rowData(object))[2] -
-        1) / 5]
+    colnames(res) <- names(rowData(object))[2 + (dim(rowData(object))[2]-1)/5]
     } else {
     res <- 100 * vapply(rowData(object)[(2 + (dim(rowData(object))[
         2

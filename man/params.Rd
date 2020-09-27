@@ -47,6 +47,8 @@ object}
 \item{nCores}{An integer value specifying the number of machine cores for
 parallel computing}
 
+\item{mc.cores}{An integer greater than 0}
+
 \item{pSize}{An integer value specifying the number of cytosines in a regrion
 to be used in a Bayesian functiona regression model for DMC detection}
 

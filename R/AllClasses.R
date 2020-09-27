@@ -31,6 +31,7 @@
 #' @param file A character
 #' @param nCores An integer value specifying the number of machine cores for
 #' parallel computing
+#' @param mc.cores An integer greater than 0
 #' @param pSize An integer value specifying the number of cytosines in a regrion
 #' to be used in a Bayesian functiona regression model for DMC detection
 #' @param bwa An integer value specifying the band-width size of B-spline basis

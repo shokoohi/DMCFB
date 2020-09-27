@@ -23,10 +23,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-The `DMCFB` package is a pipeline to identify differentially methyalted 
-cytosines (DMC) in bisulfite sequencing data using Bayesian functional
+The `DMCFB` package is a pipeline to identify differentially methylated 
+cytosine (DMC) in bisulfite sequencing data using Bayesian functional
 regression models. 
-In what follows we provides some guidlines on how to read your data and analyze
+In what follows we provides some guidelines on how to read your data and analyze
 them.
 
 # Reading data
@@ -42,7 +42,7 @@ represent
  - Number of methylated reads (m)
  - Number of un-methylated reads (u)
 
-and each row is a cytonsine (or a small region) in DNA. 
+and each row is a cytosine (or a small region) in DNA. 
 
 The function  `readBismark(<files' paths>, <files' names>)` has two inputs: 
 'the paths of the files' and 'the names of the files'.
@@ -56,7 +56,7 @@ follows:
 library(DMCFB)
 fn <- list.files(system.file("extdata",package = "DMCFB"))
 fn.f <- list.files(system.file("extdata",package="DMCFB"), full.names=TRUE)
-OBJ <- readBismark(fn.f, fn)
+OBJ <- readBismark(fn.f, fn, mc.cores = 2)
 cdOBJ <- DataFrame(Cell = factor(c("BC", "TC","Mono"),
 levels = c("BC", "TC", "Mono")), row.names = c("BCU1568","BCU173","BCU551"))
 colData(OBJ) <- cdOBJ
@@ -112,7 +112,7 @@ indBC <- which(type=="BC")
 indMono <- which(type=="Mono")
 namelist.new <- namelist.new[c(indBC,indMono,indTC)]
 namelist.new.f <- namelist.new.f[c(indBC,indMono,indTC)]
-BLKDat <- readBismark(namelist.new.f, namelist.new)
+BLKDat <- readBismark(namelist.new.f, namelist.new, mc.cores = 2)
 colData1 <- DataFrame(Group = factor(
   c(rep("BC",length(indBC)), rep("Mono",length(indMono)), 
   rep("TC", length(indTC))), levels = c("BC", "Mono", "TC")), 

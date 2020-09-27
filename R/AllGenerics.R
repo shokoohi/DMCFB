@@ -207,18 +207,18 @@ setGeneric("combine", function(obj1, obj2) standardGeneric("combine"))
 #' @inheritParams params
 #' @return A \code{\link{BSDMC-class}} object
 #' @examples
-#' fn <- list.files(system.file("extdata", package = "DMCHMM"))
-#' fn.f <- list.files(system.file("extdata", package = "DMCHMM"),
+#' fn <- list.files(system.file("extdata", package = "DMCFB"))
+#' fn.f <- list.files(system.file("extdata", package = "DMCFB"),
 #'   full.names = TRUE
 #' )
-#' OBJ <- readBismark(fn.f, fn)
+#' OBJ <- readBismark(fn.f, fn, mc.cores=1)
 #' cdOBJ <- DataFrame(Cell = factor(c("BC", "TC", "Mono"),
 #'   labels = c("BC", "TC", "Mono")
 #' ), row.names = c("BCU1568", "BCU173", "BCU551"))
 #' colData(OBJ) <- cdOBJ
 #' OBJ
 #' @exportMethod readBismark
-setGeneric("readBismark", function(files, colData)
+setGeneric("readBismark", function(files, colData, mc.cores)
     standardGeneric("readBismark"))
 
 #' @title findDMCFB method
