@@ -118,7 +118,7 @@ setValidity("BSDMC", function(object) {
     }else{
     return(TRUE)
     }
-    if (!(all(is.element(names(assays(object)), c(
+    if (!(all(is.element(assayNames(object), c(
     "methReads", "totalReads",
     "methLevels"
     ))))) {
