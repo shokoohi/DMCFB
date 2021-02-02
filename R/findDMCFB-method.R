@@ -737,8 +737,7 @@
     return(object.new)
 }
 
-.findDMCFB <- function(
-    object, bwa, bwb, nBurn, nMC, nThin, alpha, sdv,
+.findDMCFB <- function(object, bwa, bwb, nBurn, nMC, nThin, alpha, sdv,
     nCores, pSize, sfiles) {
     if (missing(object)) {
     stop("No BSData object is specified.\n")
@@ -790,12 +789,14 @@
     rownames(res) <- c("Equal(%)", "Hyper(%)", "Hypo(%)")
     colnames(res) <- names(rowData(object))[2 + (dim(rowData(object))[2]-1)/5]
     } else {
-    res <- 100 * vapply(rowData(object)[(2 + (dim(rowData(object))[
-        2
-    ] - 1) / 5):(1 + 2 * (dim(rowData(object))[
-        2
-    ] - 1) / 5)], table, FUN.VALUE = numeric(3L)) / dim(object)[1]
-    rownames(res) <- c("Equal(%)", "Hyper(%)", "Hypo(%)")
+        res = rowData(object)[(2 + (dim(rowData(object))[2] - 1) / 5):(1 +
+            2 * (dim(rowData(object))[2] - 1) / 5)]
+
+        res[sapply(res, is.character)] <- lapply(res[sapply(res, is.character)],
+            function(x){factor(x, levels = c("Equal", "Hyper", "Hypo") )})
+
+        res <- 100*vapply(res, table, FUN.VALUE = numeric(3L)) / dim(object)[1]
+        rownames(res) <- c("Equal(%)", "Hyper(%)", "Hypo(%)")
     }
     print(t(res))
     message("------------------------------------------------------------")
