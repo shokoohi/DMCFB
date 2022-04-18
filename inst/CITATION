@@ -22,7 +22,7 @@ citEntry(entry = "Article",
                     person("Celia", "Greenwood")),
          year = '2019',
          journal = "Biometrics",
-         journal = "DOI: 10.1111/biom.12965",
+         doi = "DOI: 10.1111/biom.12965",
          url = "https://doi.org/10.1111/biom.12965",
          textVersion =
            paste('Shokoohi F., Stephens D. and Greenwood C. (2019).',

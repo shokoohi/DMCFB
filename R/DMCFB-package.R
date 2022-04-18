@@ -1,4 +1,4 @@
-#' @title Differentially Methylated cytosines using funtional Bayesian
+#' @title Differentially Methylated cytosines using functional Bayesian
 #' regression models
 #'
 #' @description DMCFB is a profiling tool for identifying differentially
